@@ -1,0 +1,15 @@
+---
+import ProjectPage from "../../../templates/ProjectPage.astro";
+import { getFeaturedProjects } from "../../../data/site";
+
+export function getStaticPaths() {
+  return getFeaturedProjects().map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<ProjectPage lang="en" project={project} />

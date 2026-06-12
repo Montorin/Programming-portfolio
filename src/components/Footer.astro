@@ -1,0 +1,23 @@
+---
+import { contact, routeMap, ui, type Lang } from "../data/site";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const labels = ui[lang];
+---
+
+<footer class="site-footer">
+  <div>
+    <strong>Mohamad-Najib Jalloul</strong>
+    <p>{labels.home.description}</p>
+  </div>
+  <div class="footer-links">
+    <a href={routeMap[lang].about}>{labels.nav.about}</a>
+    <a href={`mailto:${contact.email}`}>{contact.email}</a>
+    <a href={contact.github}>GitHub</a>
+    <a href={contact.linkedin}>LinkedIn</a>
+  </div>
+</footer>

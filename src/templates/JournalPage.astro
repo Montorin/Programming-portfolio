@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import JournalTimeline from "../components/JournalTimeline.astro";
+import MediaSection from "../components/MediaSection.astro";
+import {
+  getOtherLang,
+  journalPath,
+  projectPath,
+  ui,
+  type Lang,
+  type Project,
+} from "../data/site";
+
+interface Props {
+  lang: Lang;
+  project: Project;
+}
+
+const { lang, project } = Astro.props;
+const labels = ui[lang];
+const content = project.content[lang];
+const alternatePath = journalPath(getOtherLang(lang), project.slug);
+const hasMedia = project.media.length > 0;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${content.title} ${labels.common.journal} | Mohamad-Najib Jalloul`}
+  description={content.journalIntro}
+  active="journal"
+  alternatePath={alternatePath}
+>
+  <article>
+    <header class={`case-hero journal-hero accent-${project.accent}`}>
+      <p class="eyebrow">{labels.common.journal}</p>
+      <h1>{content.title}</h1>
+      <p>{content.journalIntro}</p>
+      <div class="hero-actions">
+        <a class="button primary" href={projectPath(lang, project.slug)}>{labels.common.readCaseStudy}</a>
+      </div>
+    </header>
+
+    {hasMedia && <MediaSection project={project} lang={lang} includeRestricted />}
+
+    <section class="content-band">
+      <JournalTimeline entries={project.journal[lang]} />
+    </section>
+  </article>
+</BaseLayout>

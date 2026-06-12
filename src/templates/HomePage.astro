@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import ProjectMedia from "../components/ProjectMedia.astro";
+import {
+  getFeaturedProjects,
+  journalPath,
+  projectPath,
+  routeMap,
+  skillGroups,
+  ui,
+  type Lang,
+} from "../data/site";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const labels = ui[lang];
+const featured = getFeaturedProjects();
+const newest = featured[0];
+const alternatePath = routeMap[lang === "en" ? "fr" : "en"].home;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${labels.home.title} | ${labels.home.kicker}`}
+  description={labels.home.description}
+  active="home"
+  alternatePath={alternatePath}
+>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">{labels.home.kicker}</p>
+      <h1>{labels.home.headline}</h1>
+      <p>{labels.home.intro}</p>
+      <div class="hero-actions">
+        <a class="button primary" href={projectPath(lang, newest.slug)}>{labels.home.featuredCta}</a>
+        <a class="button secondary" href={journalPath(lang, newest.slug)}>{labels.home.journalCta}</a>
+      </div>
+    </div>
+    <aside class="hero-feature">
+      <p class="eyebrow">{labels.home.featured}</p>
+      <ProjectMedia project={newest} lang={lang} />
+      <h2>{newest.content[lang].title}</h2>
+      <p>{newest.content[lang].pitch}</p>
+    </aside>
+  </section>
+
+  <section class="stats-strip" aria-label={labels.home.skills}>
+    {skillGroups[lang].map((skill) => <span>{skill}</span>)}
+  </section>
+
+  <section class="content-band">
+    <div class="section-heading">
+      <p class="eyebrow">{labels.home.selected}</p>
+      <h2>{labels.home.selected}</h2>
+    </div>
+    <div class="project-grid">
+      {featured.map((project) => <ProjectCard project={project} lang={lang} />)}
+    </div>
+  </section>
+</BaseLayout>

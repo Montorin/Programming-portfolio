@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { getFeaturedProjects, routeMap, ui, type Lang } from "../data/site";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const labels = ui[lang];
+const alternatePath = routeMap[lang === "en" ? "fr" : "en"].projects;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${labels.projects.title} | Mohamad-Najib Jalloul`}
+  description={labels.projects.description}
+  active="projects"
+  alternatePath={alternatePath}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{labels.nav.projects}</p>
+    <h1>{labels.projects.title}</h1>
+    <p>{labels.projects.intro}</p>
+  </section>
+  <section class="content-band">
+    <div class="project-grid">
+      {getFeaturedProjects().map((project) => <ProjectCard project={project} lang={lang} showJournalLink={false} />)}
+    </div>
+  </section>
+</BaseLayout>

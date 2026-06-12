@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { getArchiveProjects, getOtherLang, routeMap, ui, type Lang } from "../data/site";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const labels = ui[lang];
+const alternatePath = routeMap[getOtherLang(lang)].archive;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${labels.archive.title} | Mohamad-Najib Jalloul`}
+  description={labels.archive.description}
+  active="archive"
+  alternatePath={alternatePath}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{labels.nav.archive}</p>
+    <h1>{labels.archive.title}</h1>
+    <p>{labels.archive.intro}</p>
+  </section>
+  <section class="content-band">
+    <div class="project-grid archive-grid">
+      {getArchiveProjects().map((project) => <ProjectCard project={project} lang={lang} compact />)}
+    </div>
+  </section>
+</BaseLayout>

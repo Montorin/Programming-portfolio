@@ -1,0 +1,42 @@
+---
+import ProjectMedia from "./ProjectMedia.astro";
+import {
+  journalPath,
+  projectPath,
+  ui,
+  type Lang,
+  type Project,
+} from "../data/site";
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  compact?: boolean;
+  showJournalLink?: boolean;
+}
+
+const { project, lang, compact = false, showJournalLink = true } = Astro.props;
+const content = project.content[lang];
+const labels = ui[lang].common;
+const href = project.type === "featured" ? projectPath(lang, project.slug) : undefined;
+const visibleMedia = project.media.find((item) => !item.restrictedToJournal);
+const hasMedia = Boolean(visibleMedia);
+---
+
+<article class:list={["project-card", compact && "is-compact", !hasMedia && "no-visual"]}>
+  {visibleMedia && <ProjectMedia project={project} lang={lang} item={visibleMedia} label={content.title} />}
+  <div class="project-card-body">
+    <p class="eyebrow">{content.eyebrow}</p>
+    <h3>{content.title}</h3>
+    <p>{content.pitch}</p>
+    <div class="tag-row" aria-label={ui[lang].common.tools}>
+      {project.tools.slice(0, compact ? 3 : 5).map((tool) => <span>{tool}</span>)}
+    </div>
+    {href && (
+      <div class="card-actions">
+        <a class="text-link" href={href}>{labels.readCaseStudy}</a>
+        {showJournalLink && <a class="text-link muted" href={journalPath(lang, project.slug)}>{labels.readJournal}</a>}
+      </div>
+    )}
+  </div>
+</article>

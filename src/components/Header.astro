@@ -1,0 +1,50 @@
+---
+import { routeMap, ui, type Lang } from "../data/site";
+
+interface Props {
+  lang: Lang;
+  active: "home" | "projects" | "journal" | "archive" | "about";
+  alternatePath: string;
+}
+
+const { lang, active, alternatePath } = Astro.props;
+const labels = ui[lang];
+const navItems = [
+  { key: "home", href: routeMap[lang].home, label: labels.nav.home },
+  { key: "projects", href: routeMap[lang].projects, label: labels.nav.projects },
+  { key: "journal", href: routeMap[lang].journal, label: labels.nav.journal },
+  { key: "archive", href: routeMap[lang].archive, label: labels.nav.archive },
+  { key: "about", href: routeMap[lang].about, label: labels.nav.about },
+] as const;
+---
+
+<a class="skip-link" href="#content">{labels.skip}</a>
+<header class="site-header">
+  <a class="brand" href={routeMap[lang].home} aria-label={labels.home.title}>
+    <strong>Mohamad-Najib Jalloul</strong>
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    {navItems.map((item) => (
+      <a href={item.href} class:list={[active === item.key && "is-active"]}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+  <a
+    class="language-link"
+    href={alternatePath}
+    data-lang-target={lang === "en" ? "fr" : "en"}
+    aria-label={lang === "en" ? "Lire en francais" : "Read in English"}
+  >
+    {labels.otherLang}
+  </a>
+</header>
+
+<script>
+  document.querySelectorAll("[data-lang-target]").forEach((link) => {
+    link.addEventListener("click", () => {
+      const target = link.getAttribute("data-lang-target");
+      if (target) localStorage.setItem("portfolio-lang", target);
+    });
+  });
+</script>

@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectMedia from "../components/ProjectMedia.astro";
+import {
+  getFeaturedProjects,
+  getOtherLang,
+  journalPath,
+  routeMap,
+  ui,
+  type Lang,
+} from "../data/site";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const labels = ui[lang];
+const alternatePath = routeMap[getOtherLang(lang)].journal;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${labels.journal.title} | Mohamad-Najib Jalloul`}
+  description={labels.journal.description}
+  active="journal"
+  alternatePath={alternatePath}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{labels.nav.journal}</p>
+    <h1>{labels.journal.title}</h1>
+    <p>{labels.journal.intro}</p>
+  </section>
+  <section class="content-band journal-grid">
+    {getFeaturedProjects().map((project) => {
+      const visibleMedia = project.media.find((item) => !item.restrictedToJournal);
+      return (
+      <article class:list={["journal-card", !visibleMedia && "no-visual"]}>
+        <div class="journal-card-body">
+          <p class="eyebrow">{project.content[lang].eyebrow}</p>
+          <h2>{project.content[lang].title}</h2>
+          <p>{project.content[lang].journalIntro}</p>
+          <div class="card-actions">
+            <a class="text-link" href={journalPath(lang, project.slug)}>{labels.common.readJournal}</a>
+          </div>
+        </div>
+        {visibleMedia && <ProjectMedia project={project} lang={lang} item={visibleMedia} />}
+      </article>
+      );
+    })}
+  </section>
+</BaseLayout>

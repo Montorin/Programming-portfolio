@@ -1,0 +1,37 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import type { Lang } from "../data/site";
+import "../styles/global.css";
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  active: "home" | "projects" | "journal" | "archive" | "about";
+  alternatePath: string;
+}
+
+const { lang, title, description, active, alternatePath } = Astro.props;
+const otherLang = lang === "en" ? "fr" : "en";
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="alternate" hreflang={otherLang} href={alternatePath} />
+    <link rel="alternate" hreflang={lang} href={Astro.url.pathname} />
+    <meta name="theme-color" content="#f7f4ef" />
+  </head>
+  <body>
+    <Header lang={lang} active={active} alternatePath={alternatePath} />
+    <main id="content">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

@@ -1,0 +1,34 @@
+---
+import PlaceholderVisual from "./PlaceholderVisual.astro";
+import type { Lang, MediaSlot, Project } from "../data/site";
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  item?: MediaSlot;
+  label?: string;
+}
+
+const { project, lang, item = project.media[0], label = project.content[lang].title } = Astro.props;
+const mediaLabel = item?.label ?? label;
+---
+
+{
+  item?.type === "image" && item.src ? (
+    <img class="project-media" src={item.src} alt={mediaLabel} loading="lazy" />
+  ) : item?.type === "video" && item.src ? (
+    <video
+      class="project-media"
+      controls
+      muted
+      playsinline
+      preload="metadata"
+      poster={item.poster}
+      aria-label={mediaLabel}
+    >
+      <source src={item.src} type="video/mp4" />
+    </video>
+  ) : (
+    <PlaceholderVisual project={project} label={mediaLabel} />
+  )
+}

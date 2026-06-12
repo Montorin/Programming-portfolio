@@ -1,0 +1,36 @@
+---
+const title = "Mohamad-Najib Jalloul";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta
+      name="description"
+      content="Bilingual portfolio for Mohamad-Najib Jalloul."
+    />
+    <script is:inline>
+      const saved = localStorage.getItem("portfolio-lang");
+      const preferred =
+        saved ||
+        (navigator.languages || [navigator.language || "en"]).find((lang) =>
+          ["en", "fr"].includes(String(lang).slice(0, 2).toLowerCase())
+        );
+      const target = String(preferred || "en").slice(0, 2).toLowerCase() === "fr" ? "/fr/" : "/en/";
+      window.location.replace(target);
+    </script>
+  </head>
+  <body>
+    <main style="font-family: system-ui, sans-serif; max-width: 720px; margin: 12vh auto; padding: 24px;">
+      <p>Choose a language / Choisir une langue</p>
+      <h1>Mohamad-Najib Jalloul</h1>
+      <p>
+        <a href="/en/">English</a> |
+        <a href="/fr/">Francais</a>
+      </p>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+---
+import PlaceholderVisual from "./PlaceholderVisual.astro";
+import ProjectMedia from "./ProjectMedia.astro";
+import { ui, type Lang, type Project } from "../data/site";
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  includeRestricted?: boolean;
+}
+
+const { project, lang, includeRestricted = false } = Astro.props;
+const labels = ui[lang].common;
+const media = project.media.filter((item) => includeRestricted || !item.restrictedToJournal);
+---
+
+<section class="content-band">
+  <div class="section-heading">
+    <p class="eyebrow">{labels.media}</p>
+    <h2>{labels.media}</h2>
+  </div>
+  <div class="media-grid">
+    {media.length === 0 && (
+      <div class="media-item">
+        <PlaceholderVisual project={project} label={project.content[lang].title} />
+        <p>{labels.noMedia}</p>
+      </div>
+    )}
+    {media.map((item) => (
+      <div class="media-item">
+        <ProjectMedia project={project} lang={lang} item={item} label={item.label} />
+        <p>{item.caption[lang]}</p>
+      </div>
+    ))}
+  </div>
+</section>

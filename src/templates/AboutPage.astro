@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { contact, getOtherLang, routeMap, skillGroups, ui, type Lang } from "../data/site";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const labels = ui[lang];
+const alternatePath = routeMap[getOtherLang(lang)].about;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${labels.about.title} | Mohamad-Najib Jalloul`}
+  description={labels.about.description}
+  active="about"
+  alternatePath={alternatePath}
+>
+  <section class="page-hero about-hero">
+    <p class="eyebrow">{labels.nav.about}</p>
+    <h1>{labels.about.headline}</h1>
+    <p>{labels.about.body}</p>
+  </section>
+
+  <section class="content-band details-grid">
+    <div>
+      <h2>{labels.home.skills}</h2>
+      <div class="tag-row large">
+        {skillGroups[lang].map((skill) => <span>{skill}</span>)}
+      </div>
+    </div>
+    <div>
+      <h2>{labels.about.contact}</h2>
+      <div class="contact-list">
+        <a href={`mailto:${contact.email}`}>{labels.about.email}: {contact.email}</a>
+        <a href={contact.github}>{labels.about.github}: Montorin</a>
+        <a href={contact.linkedin}>{labels.about.linkedin}</a>
+      </div>
+      <p class="muted-copy">{labels.about.note}</p>
+    </div>
+  </section>
+</BaseLayout>

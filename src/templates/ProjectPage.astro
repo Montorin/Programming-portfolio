@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import JournalTimeline from "../components/JournalTimeline.astro";
+import MediaSection from "../components/MediaSection.astro";
+import {
+  getOtherLang,
+  journalPath,
+  projectPath,
+  ui,
+  type Lang,
+  type Project,
+} from "../data/site";
+
+interface Props {
+  lang: Lang;
+  project: Project;
+}
+
+const { lang, project } = Astro.props;
+const labels = ui[lang];
+const content = project.content[lang];
+const alternatePath = projectPath(getOtherLang(lang), project.slug);
+const hasCaseStudyMedia = project.media.some((item) => !item.restrictedToJournal);
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${content.title} | ${labels.nav.projects}`}
+  description={content.pitch}
+  active="projects"
+  alternatePath={alternatePath}
+>
+  <article class="case-study">
+    <header class={`case-hero accent-${project.accent}`}>
+      <p class="eyebrow">{content.eyebrow}</p>
+      <h1>{content.title}</h1>
+      <p>{content.pitch}</p>
+      <div class="hero-actions">
+        <a class="button primary" href={journalPath(lang, project.slug)}>{labels.common.readJournal}</a>
+        {project.links.map((link) => <a class="button secondary" href={link.url}>{link.label}</a>)}
+      </div>
+    </header>
+
+    <section class="content-band two-column">
+      <div>
+        <p class="eyebrow">{labels.common.role}</p>
+        <h2>{labels.common.role}</h2>
+      </div>
+      <div>
+        <p class="focus-pill">{labels.common.ownRole}</p>
+        <p>{content.role}</p>
+        <p>{content.context}</p>
+      </div>
+    </section>
+
+    <section class="content-band details-grid">
+      <div>
+        <h2>{labels.common.tools}</h2>
+        <div class="tag-row large">
+          {project.tools.map((tool) => <span>{tool}</span>)}
+        </div>
+      </div>
+      <div>
+        <h2>{labels.common.links}</h2>
+        <div class="link-list">
+          {project.links.length === 0 ? <span>--</span> : project.links.map((link) => <a href={link.url}>{link.label}</a>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="content-band three-lists">
+      <div>
+        <h2>{labels.common.built}</h2>
+        <ul>{content.built.map((item) => <li>{item}</li>)}</ul>
+      </div>
+      <div>
+        <h2>{labels.common.highlights}</h2>
+        <ul>{content.highlights.map((item) => <li>{item}</li>)}</ul>
+      </div>
+      <div>
+        <h2>{labels.common.learned}</h2>
+        <ul>{content.learned.map((item) => <li>{item}</li>)}</ul>
+      </div>
+    </section>
+
+    {hasCaseStudyMedia && <MediaSection project={project} lang={lang} />}
+
+    <section class="content-band">
+      <div class="section-heading">
+        <p class="eyebrow">{labels.common.journal}</p>
+        <h2>{labels.common.journal}</h2>
+        <p>{content.journalIntro}</p>
+      </div>
+      <JournalTimeline entries={project.journal[lang]} />
+    </section>
+  </article>
+</BaseLayout>

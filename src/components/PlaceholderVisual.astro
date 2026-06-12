@@ -1,0 +1,23 @@
+---
+import type { Project } from "../data/site";
+
+interface Props {
+  project: Project;
+  label?: string;
+}
+
+const { project, label = project.content.en.title } = Astro.props;
+---
+
+<div class={`project-visual accent-${project.accent}`} aria-label={label}>
+  <div class="visual-grid"></div>
+  <div class="visual-window">
+    <span>{project.discipline}</span>
+    <strong>{project.content.en.title}</strong>
+  </div>
+  <div class="visual-lines">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
