@@ -273,6 +273,13 @@ li + li {
   text-transform: uppercase;
 }
 
+.hero-feature > .eyebrow,
+.project-card-body > .eyebrow,
+.case-hero > .eyebrow,
+.journal-card > .eyebrow {
+  color: var(--ink);
+}
+
 .stats-strip {
   display: flex;
   flex-wrap: wrap;
