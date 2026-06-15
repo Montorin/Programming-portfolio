@@ -258,13 +258,7 @@ export const projects: Project[] = [
     discipline: "game",
     tools: ["Unreal Engine", "Blueprints", "Perforce", "Game cameras", "Input systems"],
     accent: "mint",
-    links: [
-      {
-        label: "Perforce change report",
-        url: "/portfolio_project_inventory.md",
-        kind: "pdf",
-      },
-    ],
+    links: [],
     media: [
       {
         type: "video",
@@ -285,8 +279,7 @@ export const projects: Project[] = [
         pitch:
           "A project made for an end-of-study project at NAD. I teamed up with a great group of artists as the only programmer. I developed tools and gameplay systems to enable my coworkers to live up to their potential.",
         role: "Gameplay systems contributor focused on input, cameras, interaction logic, mirror puzzle behavior, and polish.",
-        context:
-          "Dollhouse is the newest and deepest project in this portfolio. The current evidence comes from 46 Perforce changelists spanning October 2025 to May 2026.",
+        context: "",
         built: [
           "Room camera and follow camera logic for navigating a dollhouse-style level.",
           "Controller-focused joystick minigame with rumble, randomized directions, and dot product scoring.",
@@ -312,8 +305,7 @@ export const projects: Project[] = [
         pitch:
           "Un projet realise comme projet de fin d'etudes au NAD. J'ai travaille avec une excellente equipe d'artistes comme seul programmeur. J'ai developpe des outils et des systemes de gameplay pour permettre a mes coequipiers d'atteindre leur plein potentiel.",
         role: "Contributeur gameplay concentre sur les entrees, les cameras, la logique d'interaction, les miroirs et le polissage.",
-        context:
-          "Dollhouse est le projet le plus recent et le plus complet du portfolio. Les preuves actuelles viennent de 46 changelists Perforce entre octobre 2025 et mai 2026.",
+        context: "",
         built: [
           "Logique de camera de chambre et de camera suiveuse pour naviguer dans un niveau de type maison de poupee.",
           "Mini-jeu de joystick pense pour la manette avec vibration, directions aleatoires et score par produit scalaire.",

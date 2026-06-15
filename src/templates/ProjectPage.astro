@@ -49,7 +49,7 @@ const hasCaseStudyMedia = project.media.some((item) => !item.restrictedToJournal
       <div>
         <p class="focus-pill">{labels.common.ownRole}</p>
         <p>{content.role}</p>
-        <p>{content.context}</p>
+        {content.context && <p>{content.context}</p>}
       </div>
     </section>
 
