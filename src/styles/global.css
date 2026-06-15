@@ -275,9 +275,12 @@ li + li {
 
 .hero-feature > .eyebrow,
 .project-card-body > .eyebrow,
-.case-hero > .eyebrow,
 .journal-card > .eyebrow {
   color: var(--ink);
+}
+
+.case-hero > .eyebrow {
+  color: inherit;
 }
 
 .stats-strip {
