@@ -21,6 +21,9 @@ const labels = ui[lang];
 const content = project.content[lang];
 const alternatePath = journalPath(getOtherLang(lang), project.slug);
 const hasMedia = project.media.length > 0;
+const entryCount = project.journal[lang].length;
+const mediaCount = project.media.length;
+const entryLabel = lang === "en" ? "Entries" : "Entrees";
 ---
 
 <BaseLayout
@@ -31,12 +34,27 @@ const hasMedia = project.media.length > 0;
   alternatePath={alternatePath}
 >
   <article>
-    <header class={`case-hero journal-hero accent-${project.accent}`}>
-      <p class="eyebrow">{labels.common.journal}</p>
-      <h1>{content.title}</h1>
-      <p>{content.journalIntro}</p>
-      <div class="hero-actions">
-        <a class="button primary" href={projectPath(lang, project.slug)}>{labels.common.readCaseStudy}</a>
+    <header class={`journal-hero accent-${project.accent}`}>
+      <div class="journal-hero-copy">
+        <p class="eyebrow">{labels.common.journal}</p>
+        <h1>{content.title}</h1>
+        <p>{content.journalIntro}</p>
+        <div class="hero-actions">
+          <a class="button primary" href={projectPath(lang, project.slug)}>{labels.common.readCaseStudy}</a>
+        </div>
+      </div>
+      <div class="journal-summary" aria-label={labels.common.journal}>
+        <span>{content.eyebrow}</span>
+        <dl>
+          <div>
+            <dt>{entryLabel}</dt>
+            <dd>{entryCount}</dd>
+          </div>
+          <div>
+            <dt>{labels.common.media}</dt>
+            <dd>{mediaCount}</dd>
+          </div>
+        </dl>
       </div>
     </header>
 

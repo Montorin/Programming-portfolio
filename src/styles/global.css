@@ -192,6 +192,7 @@ li + li {
 
 .hero-feature,
 .case-hero,
+.journal-hero,
 .page-hero,
 .project-card,
 .journal-card,
@@ -496,7 +497,70 @@ li + li {
 }
 
 .journal-hero {
-  min-height: 360px;
+  width: min(1180px, calc(100% - 32px));
+  margin: 1.5rem auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.55fr);
+  gap: 1.25rem;
+  align-items: stretch;
+  padding: 1.25rem;
+  border-left: 7px solid currentColor;
+}
+
+.journal-hero h1 {
+  margin-bottom: 0.75rem;
+  font-size: 2.8rem;
+}
+
+.journal-hero .eyebrow {
+  color: inherit;
+}
+
+.journal-hero .hero-actions {
+  margin-top: 1rem;
+}
+
+.journal-summary {
+  display: grid;
+  align-content: space-between;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1rem;
+  background: #fffdf8;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.journal-summary span {
+  color: currentColor;
+  font-size: 0.82rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.journal-summary dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.journal-summary div {
+  min-width: 0;
+}
+
+.journal-summary dt {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.journal-summary dd {
+  margin: 0.15rem 0 0;
+  color: var(--ink);
+  font-size: 2rem;
+  font-weight: 850;
+  line-height: 1;
 }
 
 .two-column {
@@ -687,7 +751,8 @@ li + li {
   .journal-grid,
   .details-grid,
   .media-grid,
-  .two-column {
+  .two-column,
+  .journal-hero {
     grid-template-columns: 1fr;
   }
 }
@@ -707,7 +772,8 @@ li + li {
   .page-hero,
   .content-band,
   .stats-strip,
-  .case-study {
+  .case-study,
+  .journal-hero {
     width: min(100% - 20px, 1180px);
   }
 
@@ -732,9 +798,14 @@ li + li {
 
   .hero-feature,
   .case-hero,
+  .journal-hero,
   .page-hero,
   .content-band {
     padding: 1rem;
+  }
+
+  .journal-hero h1 {
+    font-size: 2.2rem;
   }
 
   .site-footer {
